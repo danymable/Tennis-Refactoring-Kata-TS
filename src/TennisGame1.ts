@@ -40,21 +40,21 @@ export class TennisGame1 implements TennisGame {
       else score = 'Win for player2';
     }
     else {
-      for (let i = 1; i < 3; i++) {
-        if (i === 1) tempScore = this.playerOneScore;
+      for (let playerNumber = 1; playerNumber < 3; playerNumber++) {
+        if (playerNumber === 1) tempScore = this.playerOneScore;
         else { score += '-'; tempScore = this.playerTwoScore; }
         switch (tempScore) {
           case 0:
-            score += 'Love';
+            score += ScoreNames[0];
             break;
           case 1:
-            score += 'Fifteen';
+            score += ScoreNames[1];
             break;
           case 2:
-            score += 'Thirty';
+            score += ScoreNames[2];
             break;
           case 3:
-            score += 'Forty';
+            score += ScoreNames[3];
             break;
         }
       }
