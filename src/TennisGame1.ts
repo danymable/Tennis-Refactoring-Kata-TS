@@ -28,7 +28,6 @@ export class TennisGame1 implements TennisGame {
 
   getScore(): string {
     let score: string = '';
-    let tempScore: number = 0;
     if (this.isScoreEqual()) {
       return this.getEqualScoreResult();
     }
@@ -40,25 +39,25 @@ export class TennisGame1 implements TennisGame {
       else score = 'Win for player2';
     }
     else {
-      for (let playerNumber = 1; playerNumber < 3; playerNumber++) {
-        if (playerNumber === 1) tempScore = this.playerOneScore;
-        else { score += '-'; tempScore = this.playerTwoScore; }
-        score += ScoreNames[tempScore]
-      }
+      return this.getRegularScore()
     }
     return score;
   }
 
-  private getEqualScoreResult() {
+  private getRegularScore(): string {
+    return ScoreNames[this.playerOneScore] + '-' + ScoreNames[this.playerTwoScore];
+  }
+
+  private getEqualScoreResult(): string {
     if(this.playerOneScore >= 3) return 'Deuce';
     return ScoreNames[this.playerOneScore] + '-All'
   }
 
-  private isGameInEndPhase() {
+  private isGameInEndPhase(): boolean {
     return this.playerOneScore >= 4 || this.playerTwoScore >= 4;
   }
 
-  private isScoreEqual() {
+  private isScoreEqual(): boolean {
     return this.playerOneScore === this.playerTwoScore;
   }
 }
