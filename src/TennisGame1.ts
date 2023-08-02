@@ -31,14 +31,24 @@ export class TennisGame1 implements TennisGame {
       return this.getEqualScoreResult();
     }
     else if (this.isGameInEndPhase()) {
-      if (this.scoreDifference() === 1) return 'Advantage ' +  this.highestScoringPlayerName();
-      else if (this.scoreDifference() === -1) return 'Advantage ' + this.highestScoringPlayerName();
-      else if (this.isGameWon()) return 'Win for ' + this.highestScoringPlayerName();
-      else return 'Win for ' + this.highestScoringPlayerName();
+      if (this.isAdvantagePoint()) return this.getAdvantagePlayerResult();
+      else return this.getWinningPlayerResult();
     }
     else {
       return this.getRegularScore()
     }
+  }
+
+  private getAdvantagePlayerResult(): string {
+    return 'Advantage ' + this.highestScoringPlayerName();
+  }
+
+  private isAdvantagePoint() {
+    return (this.scoreDifference() === 1) || (this.scoreDifference() === -1);
+  }
+
+  private getWinningPlayerResult(): string {
+    return 'Win for ' + this.highestScoringPlayerName();
   }
 
   private highestScoringPlayerName(): string {
