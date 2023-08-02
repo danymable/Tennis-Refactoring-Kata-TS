@@ -1,5 +1,12 @@
 import { TennisGame } from './TennisGame';
 
+enum TennisScoreNames {
+  Love,
+  Fifteen,
+  Thirty,
+  Forty
+}
+
 export class TennisGame1 implements TennisGame {
   private playerOneScore: number = 0;
   private playerTwoScore: number = 0;
@@ -19,50 +26,25 @@ export class TennisGame1 implements TennisGame {
   }
 
   getScore(): string {
-    let score: string = '';
-    let tempScore: number = 0;
     if (this.isScoreEqual()) {
-      switch (this.playerOneScore) {
-        case 0:
-          score = 'Love-All';
-          break;
-        case 1:
-          score = 'Fifteen-All';
-          break;
-        case 2:
-          score = 'Thirty-All';
-          break;
-        default:
-          score = 'Deuce';
-          break;
-
-      }
+      if (this.playerOneScore >= 3) return 'Deuce'
+      return TennisScoreNames[this.playerOneScore] + '-All';
     }
     else if (this.isGameInEndPhase()) {
-      if (this.scoreDifference() === 1) score = 'Advantage player1';
-      else if (this.scoreDifference() === -1) score = 'Advantage player2';
-      else if (this.scoreDifference() >= 2) score = 'Win for player1';
-      else score = 'Win for player2';
+      if (this.scoreDifference() === 1) return 'Advantage player1';
+      else if (this.scoreDifference() === -1) return 'Advantage player2';
+      else if (this.scoreDifference() >= 2) return 'Win for player1';
+      else return 'Win for player2';
     }
-    else {
-      for (let i = 1; i < 3; i++) {
-        if (i === 1) tempScore = this.playerOneScore;
-        else { score += '-'; tempScore = this.playerTwoScore; }
-        switch (tempScore) {
-          case 0:
-            score += 'Love';
-            break;
-          case 1:
-            score += 'Fifteen';
-            break;
-          case 2:
-            score += 'Thirty';
-            break;
-          case 3:
-            score += 'Forty';
-            break;
-        }
-      }
+    return this.getRegularScoreResult();
+  }
+
+  private getRegularScoreResult(score: string = '') {
+    let tempScore: number = 0;
+    for (let i = 1; i < 3; i++) {
+      if (i === 1) tempScore = this.playerOneScore;
+      else { score += '-'; tempScore = this.playerTwoScore; }
+      score += TennisScoreNames[tempScore];
     }
     return score;
   }
