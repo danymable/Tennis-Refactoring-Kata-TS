@@ -40,5 +40,26 @@ describe('TennisGame', () => {
       });
     });
   });
+  describe('accepting name inputs', () => {
+    let game: TennisGame
+    const playerOneName:string = 'player one name'
+    const playerTwoName:string = 'player two name'
+
+    it("when player one wins, returns player one's name", ()=>{
+      game = new TennisGame1(playerOneName, playerTwoName)
+      const expectedScore:string = 'Win for ' + playerOneName
+      winGame(game, playerOneName);
+
+      expect(game.getScore()).toEqual(expectedScore);
+    });
+
+    it("when player two wins, returns player two's name", ()=>{
+      game = new TennisGame1(playerOneName, playerTwoName)
+      const expectedScore:string = 'Win for ' + playerTwoName
+      winGame(game, playerTwoName);
+
+      expect(game.getScore()).toEqual(expectedScore);
+    });
+  })
 });
 
