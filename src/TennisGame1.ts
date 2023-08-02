@@ -1,10 +1,18 @@
 import { TennisGame } from './TennisGame';
 
+enum ScoreNames {
+  Love,
+  Fifteen,
+  Thirty,
+  Forty
+}
+
 export class TennisGame1 implements TennisGame {
   private playerOneScore: number = 0;
   private playerTwoScore: number = 0;
   private playerOneName: string;
   private playerTwoName: string;
+
 
   constructor(playerOneName: string, playerTwoName: string) {
     this.playerOneName = playerOneName;
@@ -22,21 +30,7 @@ export class TennisGame1 implements TennisGame {
     let score: string = '';
     let tempScore: number = 0;
     if (this.isScoreEqual()) {
-      switch (this.playerOneScore) {
-        case 0:
-          score = 'Love-All';
-          break;
-        case 1:
-          score = 'Fifteen-All';
-          break;
-        case 2:
-          score = 'Thirty-All';
-          break;
-        default:
-          score = 'Deuce';
-          break;
-
-      }
+      return this.getEqualScoreResult();
     }
     else if (this.isGameInEndPhase()) {
       const minusResult: number = this.playerOneScore - this.playerTwoScore;
@@ -66,6 +60,11 @@ export class TennisGame1 implements TennisGame {
       }
     }
     return score;
+  }
+
+  private getEqualScoreResult() {
+    if(this.playerOneScore >= 3) return 'Deuce';
+    return ScoreNames[this.playerOneScore] + '-All'
   }
 
   private isGameInEndPhase() {
