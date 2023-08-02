@@ -1,8 +1,8 @@
 import { TennisGame } from './TennisGame';
 
 export class TennisGame1 implements TennisGame {
-  private m_score1: number = 0;
-  private m_score2: number = 0;
+  private playerOneScore: number = 0;
+  private playerTwoScore: number = 0;
   private player1Name: string;
   private player2Name: string;
 
@@ -13,16 +13,16 @@ export class TennisGame1 implements TennisGame {
 
   wonPoint(playerName: string): void {
     if (playerName === 'player1')
-      this.m_score1 += 1;
+      this.playerOneScore += 1;
     else
-      this.m_score2 += 1;
+      this.playerTwoScore += 1;
   }
 
   getScore(): string {
     let score: string = '';
     let tempScore: number = 0;
-    if (this.m_score1 === this.m_score2) {
-      switch (this.m_score1) {
+    if (this.isScoreEqual()) {
+      switch (this.playerOneScore) {
         case 0:
           score = 'Love-All';
           break;
@@ -38,17 +38,16 @@ export class TennisGame1 implements TennisGame {
 
       }
     }
-    else if (this.m_score1 >= 4 || this.m_score2 >= 4) {
-      const minusResult: number = this.m_score1 - this.m_score2;
-      if (minusResult === 1) score = 'Advantage player1';
-      else if (minusResult === -1) score = 'Advantage player2';
-      else if (minusResult >= 2) score = 'Win for player1';
+    else if (this.isGameInEndPhase()) {
+      if (this.scoreDifference() === 1) score = 'Advantage player1';
+      else if (this.scoreDifference() === -1) score = 'Advantage player2';
+      else if (this.scoreDifference() >= 2) score = 'Win for player1';
       else score = 'Win for player2';
     }
     else {
       for (let i = 1; i < 3; i++) {
-        if (i === 1) tempScore = this.m_score1;
-        else { score += '-'; tempScore = this.m_score2; }
+        if (i === 1) tempScore = this.playerOneScore;
+        else { score += '-'; tempScore = this.playerTwoScore; }
         switch (tempScore) {
           case 0:
             score += 'Love';
@@ -66,5 +65,17 @@ export class TennisGame1 implements TennisGame {
       }
     }
     return score;
+  }
+
+  private scoreDifference(): number {
+    return this.playerOneScore - this.playerTwoScore;
+  }
+
+  private isGameInEndPhase() {
+    return this.playerOneScore >= 4 || this.playerTwoScore >= 4;
+  }
+
+  private isScoreEqual() {
+    return this.playerOneScore === this.playerTwoScore;
   }
 }
