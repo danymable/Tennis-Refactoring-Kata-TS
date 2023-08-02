@@ -32,16 +32,19 @@ export class TennisGame1 implements TennisGame {
       return this.getEqualScoreResult();
     }
     else if (this.isGameInEndPhase()) {
-      const minusResult: number = this.playerOneScore - this.playerTwoScore;
-      if (minusResult === 1) score = 'Advantage player1';
-      else if (minusResult === -1) score = 'Advantage player2';
-      else if (minusResult >= 2) score = 'Win for player1';
+      if (this.scoreDifference() === 1) score = 'Advantage player1';
+      else if (this.scoreDifference() === -1) score = 'Advantage player2';
+      else if (this.scoreDifference() >= 2) score = 'Win for player1';
       else score = 'Win for player2';
     }
     else {
       return this.getRegularScore()
     }
     return score;
+  }
+
+  private scoreDifference(): number {
+    return this.playerOneScore - this.playerTwoScore;
   }
 
   private getRegularScore(): string {
