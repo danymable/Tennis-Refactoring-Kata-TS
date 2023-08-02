@@ -27,23 +27,26 @@ export class TennisGame1 implements TennisGame {
   }
 
   getScore(): string {
-    let score: string = '';
     if (this.isScoreEqual()) {
       return this.getEqualScoreResult();
     }
     else if (this.isGameInEndPhase()) {
-      if (this.scoreDifference() === 1) score = 'Advantage ' +  'player1';
-      else if (this.scoreDifference() === -1) score = 'Advantage ' + 'player2';
-      else if (this.isGameWon()) score = 'Win for ' + 'player1';
-      else score = 'Win for ' + 'player2';
+      if (this.scoreDifference() === 1) return 'Advantage ' +  this.highestScoringPlayerName();
+      else if (this.scoreDifference() === -1) return 'Advantage ' + this.highestScoringPlayerName();
+      else if (this.isGameWon()) return 'Win for ' + this.highestScoringPlayerName();
+      else return 'Win for ' + this.highestScoringPlayerName();
     }
     else {
       return this.getRegularScore()
     }
-    return score;
   }
 
-  private isGameWon() {
+  private highestScoringPlayerName(): string {
+    if(this.playerTwoScore > this.playerOneScore) return 'player2'
+    return 'player1';
+  }
+
+  private isGameWon(): boolean {
     return this.scoreDifference() >= 2;
   }
 
