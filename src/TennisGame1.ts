@@ -27,16 +27,11 @@ export class TennisGame1 implements TennisGame {
   }
 
   getScore(): string {
-    if (this.isScoreEqual()) {
-      return this.getEqualScoreResult();
-    }
-    else if (this.isGameInEndPhase()) {
-      if (this.isAdvantagePoint()) return this.getAdvantagePlayerResult();
-      else return this.getWinningPlayerResult();
-    }
-    else {
-      return this.getRegularScore()
-    }
+    if (this.isScoreEqual())return this.getEqualScoreResult()
+    if (this.isGameWon()) return this.getWinningPlayerResult()
+    if (this.isAdvantagePoint()) return this.getAdvantagePlayerResult()
+
+    return this.getRegularScore()
   }
 
   private getAdvantagePlayerResult(): string {
@@ -44,7 +39,7 @@ export class TennisGame1 implements TennisGame {
   }
 
   private isAdvantagePoint() {
-    return (this.scoreDifference() === 1);
+    return this.isGameInEndPhase() && this.scoreDifference() === 1;
   }
 
   private getWinningPlayerResult(): string {
@@ -52,8 +47,8 @@ export class TennisGame1 implements TennisGame {
   }
 
   private highestScoringPlayerName(): string {
-    if(this.playerTwoScore > this.playerOneScore) return 'player2'
-    return 'player1';
+    if(this.playerTwoScore > this.playerOneScore) return this.playerTwoName
+    return this.playerOneName;
   }
 
   private isGameWon(): boolean {

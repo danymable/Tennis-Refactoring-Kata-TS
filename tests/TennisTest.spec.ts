@@ -24,13 +24,41 @@ function checkScore(game: TennisGame, player1Score: number, player2Score: number
   expect(game.getScore()).toEqual(expectedScore);
 }
 
-describe('TennisGame', () => {
+function winGame(game: TennisGame, playerOneName: string) {
+  for (let points = 0; points < 4; points++) {
+    game.wonPoint(playerOneName);
+  }
+}
 
-  describe('TennisGame1', () => {
+describe('TennisGame', () => {
+  describe('calculating the correct score', () => {
     scores.forEach(([player1Score, player2Score, expectedScore]) => {
       it(`scores ${player1Score}:${player2Score} as ${expectedScore}`, () => {
         checkScore(new TennisGame1('player1', 'player2'), player1Score, player2Score, expectedScore);
       });
     });
-  });
+  })
+  describe('accepting name inputs', () => {
+    let game: TennisGame
+    const playerOneName:string = 'player one name'
+    const playerTwoName:string = 'player two name'
+
+    it("when player one wins, returns player one's name", ()=>{
+      game = new TennisGame1(playerOneName, playerTwoName)
+      const expectedScore:string = 'Win for ' + playerOneName
+      winGame(game, playerOneName);
+
+      expect(game.getScore()).toEqual(expectedScore);
+    });
+
+    it("when player two wins, returns player two's name", ()=>{
+      game = new TennisGame1(playerOneName, playerTwoName)
+      const expectedScore:string = 'Win for ' + playerTwoName
+      winGame(game, playerTwoName);
+
+      expect(game.getScore()).toEqual(expectedScore);
+    });
+  })
 });
+
+
