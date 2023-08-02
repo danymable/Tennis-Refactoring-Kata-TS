@@ -43,20 +43,7 @@ export class TennisGame1 implements TennisGame {
       for (let playerNumber = 1; playerNumber < 3; playerNumber++) {
         if (playerNumber === 1) tempScore = this.playerOneScore;
         else { score += '-'; tempScore = this.playerTwoScore; }
-        switch (tempScore) {
-          case 0:
-            score += ScoreNames[0];
-            break;
-          case 1:
-            score += ScoreNames[1];
-            break;
-          case 2:
-            score += ScoreNames[2];
-            break;
-          case 3:
-            score += ScoreNames[3];
-            break;
-        }
+        score += ScoreNames[tempScore]
       }
     }
     return score;
