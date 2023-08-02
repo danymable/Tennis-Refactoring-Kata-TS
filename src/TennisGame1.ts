@@ -44,7 +44,7 @@ export class TennisGame1 implements TennisGame {
   }
 
   private isAdvantagePoint() {
-    return (this.scoreDifference() === 1) || (this.scoreDifference() === -1);
+    return (this.scoreDifference() === 1);
   }
 
   private getWinningPlayerResult(): string {
@@ -57,11 +57,11 @@ export class TennisGame1 implements TennisGame {
   }
 
   private isGameWon(): boolean {
-    return this.scoreDifference() >= 2;
+    return this.isGameInEndPhase() && this.scoreDifference() >= 2;
   }
 
   private scoreDifference(): number {
-    return this.playerOneScore - this.playerTwoScore;
+    return Math.abs(this.playerOneScore - this.playerTwoScore);
   }
 
   private getRegularScore(): string {
